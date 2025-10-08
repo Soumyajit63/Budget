@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Budget Buddy - Dashboard</title>
+
+  <!-- Fonts and CSS -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Open+Sans&display=swap" rel="stylesheet" />
+  <link href="css/bootstrap.min.css" rel="stylesheet" />
+  <link href="css/bootstrap-icons.css" rel="stylesheet" />
+  <link href="css/templatemo-topic-listing.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="topics-listing-page">
+
+<main>
+
+<!-- Navbar -->
+     <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <a class="navbar-brand" href="index.html">
+                        <img src="images/logo-transparent-png.png" alt="Budget Buddy Logo" height="90" width="90">
+                    </a>
+                    
+
+                    <div class="d-lg-none ms-auto me-4">
+                        <a href="#top" class="navbar-icon bi-person smoothscroll"></a>
+                    </div>
+
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-lg-5 me-lg-auto">
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="index.html#section_1">Home</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="index.html#section_2">Browse Topics</a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="index.html#section_3">How it works</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="index.html#section_4">FAQs</a>
+                            </li>
+    
+                            <li class="nav-item">
+                                <a class="nav-link click-scroll" href="index.html#section_5">Contact</a>
+                            </li>
+
+                            </li>
+                        </ul>
+
+                       <div class="d-none d-lg-block">
+                            <a href="login.html" class="btn login-btn">Login</a>  
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+<!-- Header -->
+<header class="site-header d-flex flex-column justify-content-center align-items-center">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 col-12">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Homepage</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+          </ol>
+        </nav>
+        <h2 class="text-white">Dashboard</h2>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- Section: Salary Input and Budget Display -->
+<section class="section-padding section-bg">
+  <div class="container">
+    <div class="row">
+
+      <!-- Salary Input -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="custom-block bg-white shadow-lg p-4">
+          <label for="salaryInput" class="form-label"><strong>💼 Enter Monthly Salary</strong></label>
+          <input type="number" class="form-control" id="salaryInput" placeholder="Enter amount in ₹">
+          <button class="btn btn-primary mt-3" onclick="submitSalary()">Submit Salary</button>
+          <hr>
+          <h6>Total Salary: <span id="salaryDisplay">₹0.00</span></h6>
+        </div>
+      </div>
+
+      <!-- Budget Breakdown -->
+      <div class="col-lg-4 col-md-6 mb-4">
+        <div class="custom-block bg-white shadow-lg p-4">
+          <h5 class="mb-3">💸 Budget Breakdown</h5>
+          <p>Shopping: <strong id="shoppingBudget">₹0.00</strong></p>
+          <p>Utilities: <strong id="utilitiesBudget">₹0.00</strong></p>
+          <p>Travel: <strong id="travelBudget">₹0.00</strong></p>
+        </div>
+      </div>
+
+      <!-- Budget Pie Chart -->
+      <div class="col-lg-4 col-md-12 mb-4">
+        <div class="custom-block bg-white shadow-lg p-4">
+          <h5 class="mb-3 text-center">📊 Budget Pie Chart</h5>
+          <canvas id="budgetPieChart" width="300" height="300"></canvas>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Section: Expense Form -->
+<section class="section-padding">
+  <div class="container">
+    <div class="row">
+
+      <div class="col-lg-8 col-12 mx-auto">
+        <div class="custom-block bg-white shadow-lg p-4">
+          <h4 class="mb-4 text-center">Pay Credit Card Bill</h4>
+
+          <form id="paymentForm">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="cardHolder" placeholder="Cardholder Name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="cardNumber" placeholder="Card Number" required>
+              </div>
+              <div class="col-md-4 mb-3">
+                <select class="form-select" id="currency" required>
+                  <option value="" disabled selected>Select Currency</option>
+                  <option value="INR">INR ₹</option>
+                  <option value="USD">USD $</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <select class="form-select" id="category" required>
+                  <option value="" disabled selected>Select Category</option>
+                  <option value="Shopping">Shopping</option>
+                  <option value="Utilities">Utilities</option>
+                  <option value="Travel">Travel</option>
+                </select>
+              </div>
+              <div class="col-md-4 mb-3">
+                <input type="date" class="form-control" id="paymentDate" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="notes" placeholder="Notes">
+              </div>
+              <div class="col-md-6 mb-3">
+                <input type="text" class="form-control" id="address" placeholder="Address" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <input type="number" class="form-control" id="amount" placeholder="Amount" required>
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-success w-100 mt-3">💳 Pay Now</button>
+          </form>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer section-padding">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 col-12 mb-4">
+        <img src="images/logo-transparent-png.png" alt="Budget Buddy Logo" height="120" width="100">
+      </div>
+      <div class="col-lg-3 col-md-4 col-6">
+        <h6 class="site-footer-title mb-3">Resources</h6>
+        <ul class="site-footer-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">How it works</a></li>
+          <li><a href="#">FAQs</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- JS Scripts -->
+<script>
+let totalSalary = 0;
+let shoppingBudget = 0;
+let utilitiesBudget = 0;
+let travelBudget = 0;
+let budgetChart;
+
+function updateUI() {
+  document.getElementById("salaryDisplay").innerText = `₹${totalSalary.toFixed(2)}`;
+  document.getElementById("shoppingBudget").innerText = `₹${shoppingBudget.toFixed(2)}`;
+  document.getElementById("utilitiesBudget").innerText = `₹${utilitiesBudget.toFixed(2)}`;
+  document.getElementById("travelBudget").innerText = `₹${travelBudget.toFixed(2)}`;
+  updatePieChart();
+}
+
+function updatePieChart() {
+  const data = [shoppingBudget, utilitiesBudget, travelBudget];
+
+  if (budgetChart) {
+    budgetChart.data.datasets[0].data = data;
+    budgetChart.update();
+  } else {
+    const ctx = document.getElementById('budgetPieChart').getContext('2d');
+    budgetChart = new Chart(ctx, {
+      type: 'pie',
+      data: {
+        labels: ['Shopping', 'Utilities', 'Travel'],
+        datasets: [{
+          data: data,
+          backgroundColor: ['#ff6384', '#36a2eb', '#ffcd56'],
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'bottom'
+          }
+        }
+      }
+    });
+  }
+}
+
+async function submitSalary() {
+    document.getElementById("clickSound").play(); 
+  const input = document.getElementById("salaryInput").value;
+  if (!input || isNaN(input) || input <= 0) {
+    alert("❌ Enter a valid salary amount.");
+    return;
+  }
+
+  totalSalary = parseFloat(input);
+  shoppingBudget = totalSalary * 0.33;
+  utilitiesBudget = totalSalary * 0.33;
+  travelBudget = totalSalary * 0.34;
+
+  updateUI();
+
+  try {
+    const res = await fetch("http://localhost:5005/api/salary", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ amount: totalSalary })
+    });
+
+    const data = await res.json();
+    if (res.ok) {
+      alert("✅ Salary saved successfully!");
+    } else {
+      alert("❌ " + data.message);
+    }
+  } catch (error) {
+    alert("❌ Error while saving salary");
+  }
+}
+
+document.getElementById("paymentForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
+  document.getElementById("clickSound").play();
+
+  const cardHolder = document.getElementById("cardHolder").value;
+  const cardNumber = document.getElementById("cardNumber").value;
+  const currency = document.getElementById("currency").value;
+  const category = document.getElementById("category").value;
+  const paymentDate = document.getElementById("paymentDate").value;
+  const notes = document.getElementById("notes").value;
+  const address = document.getElementById("address").value;
+  const amount = parseFloat(document.getElementById("amount").value);
+
+  if (!cardHolder || !cardNumber || !currency || !category || !paymentDate || !address || isNaN(amount)) {
+    alert("❌ Please fill in all required fields.");
+    return;
+  }
+
+  try {
+    const res = await fetch("http://localhost:5005/api/dashboard", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        cardHolder, cardNumber, currency, category, paymentDate, notes, address, amount
+      })
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      alert("✅ " + data.message);
+      document.getElementById("paymentForm").reset();
+
+      if (category === "Shopping") {
+        shoppingBudget = Math.max(shoppingBudget - amount, 0);
+      } else if (category === "Utilities") {
+        utilitiesBudget = Math.max(utilitiesBudget - amount, 0);
+      } else if (category === "Travel") {
+        travelBudget = Math.max(travelBudget - amount, 0);
+      }
+
+      totalSalary = shoppingBudget + utilitiesBudget + travelBudget;
+      updateUI();
+    } else {
+      alert("❌ " + data.message);
+    }
+  } catch (err) {
+    console.error("❌ Error:", err);
+    alert("❌ Server error occurred.");
+  }
+});
+</script>
+
+  <script src="js/jquery.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/jquery.sticky.js"></script>
+        <script src="js/click-scroll.js"></script>
+        <script src="js/custom.js"></script>
+
+        <audio id="clickSound" src="./sound/cashier-quotka-chingquot-sound-effect-129698.mp3" preload="auto"></audio>
+        <audio id="clickSound" src="./sound/cashier-quotka-chingquot-sound-effect-129698.mp3" preload="auto"></audio>
+
+
+</body>
+</html>

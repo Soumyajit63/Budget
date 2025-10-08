@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login Page</title>
+
+  <!-- CSS -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/tooplate-kool-form-pack.css" rel="stylesheet">
+</head>
+
+<body>
+  <main>
+    <section class="hero-section d-flex justify-content-center align-items-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-5 col-12 mx-auto">
+            <form class="custom-form login-form" id="loginForm" method="post">
+              <h2 class="hero-title text-center mb-4 pb-2">Login Form</h2>
+
+              <div class="form-floating mb-4">
+                <input type="email" id="email" class="form-control" placeholder="Email" required>
+                <label for="email">Email</label>
+              </div>
+
+              <div class="form-floating mb-4">
+                <input type="password" id="password" class="form-control" placeholder="Password" required>
+                <label for="password">Password</label>
+              </div>
+
+              <div class="form-check mb-4">
+                <input class="form-check-input" type="checkbox" id="remember">
+                <label class="form-check-label" for="remember">Remember me</label>
+              </div>
+
+              <div class="row justify-content-center align-items-center">
+                <div class="col-5">
+                  <button type="submit" class="form-control btn btn-primary">Login</button>
+                </div>
+                <div class="col-7 text-center">
+                  <a href="register.html" class="btn custom-btn custom-border-btn">Register</a>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Background Video -->
+      <div class="video-wrap">
+        <video autoplay loop muted class="custom-video">
+          <source src="videos/7055343-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        </video>
+      </div>
+    </section>
+  </main>
+
+  <!-- JS -->
+  <script>
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value.trim();
+      const passWord = document.getElementById('password').value.trim();
+
+      try {
+        const res = await fetch('http://localhost:5005/api/login', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, passWord })
+        });
+
+        const data = await res.json();
+
+        if (res.status === 200) {
+          // ✅ Save login state and user name from response
+          localStorage.setItem("isLoggedIn", "true");
+          localStorage.setItem("userName", data.name || "User");
+
+          alert("✅ Login successful");
+          window.location.href = "index.html";
+        } else {
+          alert("❌ " + (data.message || "Login failed"));
+        }
+      } catch (err) {
+        console.error("Login error:", err);
+        alert("⚠️ Server error. Please try again.");
+      }
+    });
+  </script>
+</body>
+</html>

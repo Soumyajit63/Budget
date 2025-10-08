@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Register</title>
+
+  <!-- Fonts & CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap" rel="stylesheet">
+
+  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/bootstrap-icons.css" rel="stylesheet">
+  <link href="css/tooplate-kool-form-pack.css" rel="stylesheet">
+
+  <style>
+    #toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #333;
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 6px;
+      display: none;
+      z-index: 9999;
+    }
+  </style>
+</head>
+
+<body>
+
+<main>
+  <section class="hero-section d-flex justify-content-center align-items-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-12 mx-auto">
+          <form class="custom-form" id="registerForm">
+            <h2 class="hero-title text-center mb-4 pb-2">Create an account</h2>
+
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-floating">
+                  <input type="text" name="fullName" id="fullName" class="form-control" placeholder="Full Name" required>
+                  <label for="fullName">Full Name</label>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-floating mb-4 p-0">
+                  <input type="email" name="email" id="email" class="form-control" placeholder="Email" required>
+                  <label for="email">Email</label>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-floating mb-4 p-0">
+                  <input type="text" name="phoneNumber" id="phoneNumber" class="form-control" placeholder="Phone Number" required>
+                  <label for="phoneNumber">Phone Number</label>
+                </div>
+              </div>
+
+              <div class="col-lg-6 col-md-6 col-12">
+                <div class="form-floating mb-4 p-0">
+                  <input type="password" name="passWord" id="passWord" class="form-control" placeholder="Password" required>
+                  <label for="passWord">Password</label>
+                </div>
+
+                <div class="form-check d-flex align-items-center mb-4">
+                  <input class="form-check-input me-2" type="checkbox" id="flexCheckDefault">
+                  <label class="form-check-label mb-0" for="flexCheckDefault">
+                    I agree to the <a href="#">Terms</a> and <a href="#">Privacy Policy</a>.
+                  </label>
+                </div>
+              </div>
+
+              <div class="row justify-content-center align-items-center">
+                <div class="col-lg-5 col-md-5 col-5 ms-auto">
+                  <button type="submit" class="form-control">Submit</button>
+                </div>
+                 <div class="col-lg-5 col-md-5 col-5 text-center ms-auto">
+    <a href="login.html" class="btn custom-btn custom-border-btn w-100 py-2">Login</a>
+  </div>
+</div>
+              </div>
+            </div>
+          </form>
+
+          <div id="toast"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Video (optional) -->
+    <div class="video-wrap">
+      <video autoplay loop muted class="custom-video">
+        <source src="videos/7055343-uhd_3840_2160_30fps.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </section>
+</main>
+
+<!-- Toast Script -->
+<script>
+  const form = document.getElementById('registerForm');
+  const toast = document.getElementById('toast');
+
+  function showToast(message, isSuccess = true) {
+    toast.textContent = message;
+    toast.style.backgroundColor = isSuccess ? '#4CAF50' : '#f44336';
+    toast.style.display = 'block';
+    setTimeout(() => {
+      toast.style.display = 'none';
+    }, 3000);
+  }
+
+  form.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const fullName = document.getElementById('fullName').value;
+    const phoneNumber = document.getElementById('phoneNumber').value;
+    const email = document.getElementById('email').value;
+    const passWord = document.getElementById('passWord').value;
+
+    try {
+      const res = await fetch('http://localhost:5005/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ fullName, phoneNumber, email, passWord })
+      });
+
+      const data = await res.json();
+
+      if (res.status === 201) {
+        showToast(data.message, true);
+        form.reset();
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 2000);
+      } else {
+        showToast(data.message || 'Registration failed', false);
+      }
+    } catch (err) {
+      console.error(err);
+      showToast('Server error occurred', false);
+    }
+  });
+</script>
+
+<!-- Bootstrap JS -->
+<script src="js/login.js/bootstrap.bundle.min.js"></script>
+<script src="js/login.js/jquery.min.js"></script>
+
+</body>
+</html>
