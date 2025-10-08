@@ -1,74 +1,90 @@
 💰 Budget Tracker
 
-A simple and efficient Budget Management Web App that helps users record, view, and manage their daily expenses.
-Built with a modern frontend (HTML, CSS, Bootstrap, JS) and a powerful backend (Node.js, Express, MongoDB) — this project demonstrates a complete full-stack workflow.
-🌐 Overview
+A full-stack web application to track and manage your daily expenses.
+Built with HTML, CSS, Bootstrap, JavaScript on the frontend and Node.js, Express, MongoDB on the backend.
+The project allows users to add expenses, view their expense history, and interact with a REST API.
 
-The Budget Tracker allows users to:
+🌟 Key Features
 
-Add new expenses with title and amount.
+Add & View Expenses: Quickly add expense entries and view them in a dynamic list.
 
-View all recorded expenses in a clean list.
+RESTful API: Backend API endpoints for fetching and adding expenses.
 
-Store data securely in a MongoDB database.
+User-Friendly Interface: Clean and responsive design with Bootstrap.
 
-Test and interact with APIs through Postman.
+Data Persistence: Stores expense data in MongoDB for reliable access.
 
-| Layer           | Technologies Used                |
-| :-------------- | :------------------------------- |
-| **Frontend**    | HTML, CSS, Bootstrap, JavaScript |
-| **Backend**     | Node.js, Express.js              |
-| **Database**    | MongoDB                          |
-| **API Testing** | Postman                          |
+Postman Integration: Test API endpoints easily with Postman.
 
-⚙️ Features
+📂 Directory Structure
+budget-project/
+├─ backend/             
+│  ├─ server.js         # Main backend server script
+│  ├─ package.json      # Node.js project dependencies
+│  ├─ models/           
+│  │  └─ Expense.js     # Mongoose schema for expenses
+│  └─ routes/           
+│     └─ expenses.js    # API endpoints
+├─ frontend/            
+│  ├─ index.html        # Frontend HTML page
+│  ├─ styles.css        # Custom styles
+│  └─ script.js         # Frontend JavaScript logic
+└─ README.md            # Project documentation
 
-✅ Add and view expenses in real time
-✅ RESTful API integration between frontend & backend
-✅ Responsive UI with Bootstrap
-✅ Data persistence using MongoDB
-✅ Easy API testing with Postman
+⚙️ Installation & Setup
 
-| Method   | Endpoint        | Description           |
-| :------- | :-------------- | :-------------------- |
-| **POST** | `/api/expenses` | Add a new expense     |
-| **GET**  | `/api/expenses` | Retrieve all expenses |
+Clone the repository
 
-
-{
-  "title": "Groceries",
-  "amount": 250
-}
+git clone https://github.com/Soumyajit63/Budget.git
 
 
-🚀 How It Works
+Navigate to the backend folder
 
-User adds an expense from the frontend form.
+cd Budget/backend
 
-The data is sent to the backend API using JavaScript’s fetch() method.
 
-Express.js handles the request and stores it in MongoDB.
+Install backend dependencies
 
-The frontend updates automatically with the new data.
+npm install
 
-🧠 Learning Highlights
 
-Full CRUD concept (Create & Read).
+Set up environment variables
 
-API communication between client and server.
+Copy .env.example to .env
 
-Integration of MongoDB Atlas with Node.js.
+Replace MONGODB_URI with your MongoDB connection string
 
-Testing endpoints with Postman.
+cp .env.example .env
 
-🔮 Future Enhancements
 
-✨ Add authentication (login/signup).
-📊 Integrate charts for expense visualization.
-💾 Enable category-wise filtering and analytics.
+Start the backend server
+
+npm run dev   # or npm start
+
+
+Open the frontend
+Open frontend/index.html in your browser (or use Live Server) while the backend is running.
+
+📈 How It Works
+
+User submits a new expense from the frontend form.
+
+The frontend sends the data to the backend API (POST /api/expenses).
+
+Backend saves the expense in MongoDB.
+
+Expenses are fetched (GET /api/expenses) and displayed instantly on the frontend.
+
+🔮 Future Improvements
+
+Add user authentication (login/signup).
+
+Enable category-based expense tracking.
+
+Integrate charts and analytics (Chart.js) for visual insights.
+
+Deploy to Heroku or Vercel for online access.
 
 🧑‍💻 Author
 
-Soumyajit Gouda (@Soumyajit63)
-
-
+Soumyajit Gouda – GitHub Profile
